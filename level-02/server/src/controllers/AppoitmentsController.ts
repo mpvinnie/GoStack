@@ -3,21 +3,26 @@ import { parseISO } from 'date-fns'
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository'
 import CreateAppointmentService from '../services/CreateAppointmentService'
-
-const appointmentsRepository = new AppointmentsRepository()
+import { getCustomRepository } from 'typeorm'
 
 export default class AppointmentsController {
+  public async index(request: Request, response: Response): Promise<Response> {
+    const appointmentsRepository = getCustomRepository(AppointmentsRepository)
+
+    const appointments = await appointmentsRepository.find()
+
+    return response.json(appointments)
+  }
+
   public async create(request: Request, response: Response): Promise<Response> {
     try {
       const { provider, date } = request.body
 
       const parsedDate = parseISO(date)
 
-      const createAppointment = new CreateAppointmentService(
-        appointmentsRepository
-      )
+      const createAppointment = new CreateAppointmentService()
 
-      const appointment = createAppointment.execute({
+      const appointment = await createAppointment.execute({
         date: parsedDate,
         provider
       })
@@ -26,10 +31,5 @@ export default class AppointmentsController {
     } catch (err) {
       return response.status(400).json({ error: err.message })
     }
-  }
-
-  public async index(request: Request, response: Response): Promise<Response> {
-    const appointments = appointmentsRepository.findAll()
-    return response.json(appointments)
   }
 }
