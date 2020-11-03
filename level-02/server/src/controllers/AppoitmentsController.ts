@@ -19,7 +19,10 @@ export default class AppointmentsController {
         .json({ error: 'This appointment is already booked' })
     }
 
-    const appointment = appointmentsRepository.create(provider, parsedDate)
+    const appointment = appointmentsRepository.create({
+      provider,
+      date: parsedDate
+    })
 
     return response.json(appointment)
   }
