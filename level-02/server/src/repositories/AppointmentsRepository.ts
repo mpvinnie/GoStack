@@ -6,6 +6,11 @@ interface ICreateAppointmentDTO {
   date: Date
 }
 
+interface IFindByDateData {
+  date: Date
+  provider: string
+}
+
 class AppointmentsRepository {
   private appointments: Appointment[]
 
@@ -13,9 +18,13 @@ class AppointmentsRepository {
     this.appointments = []
   }
 
-  public findByDate(date: Date): Appointment | undefined {
-    const findAppointment = this.appointments.find(appointment =>
-      isEqual(date, appointment.date)
+  public findByDate({
+    date,
+    provider
+  }: IFindByDateData): Appointment | undefined {
+    const findAppointment = this.appointments.find(
+      appointment =>
+        isEqual(date, appointment.date) && appointment.provider === provider
     )
 
     return findAppointment
