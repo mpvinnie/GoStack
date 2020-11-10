@@ -9,12 +9,12 @@ class SessionsController {
 
       const authenticateUser = new AuthenticateUserService()
 
-      const { user } = await authenticateUser.execute({
+      const { user, token } = await authenticateUser.execute({
         email,
         password
       })
 
-      return response.json({ user })
+      return response.json({ user, token })
     } catch (err) {
       return response.status(401).json({ error: err.message })
     }
