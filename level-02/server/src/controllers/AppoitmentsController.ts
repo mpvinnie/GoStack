@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import { parseISO } from 'date-fns'
+import { getCustomRepository } from 'typeorm'
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository'
 import CreateAppointmentService from '../services/CreateAppointmentService'
-import { getCustomRepository } from 'typeorm'
 
 export default class AppointmentsController {
   public async index(request: Request, response: Response): Promise<Response> {
