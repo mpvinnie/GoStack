@@ -1,4 +1,4 @@
-import React, { useCallback, useState, FormEvent } from 'react'
+import React, { useCallback, useState, FormEvent, useEffect } from 'react'
 import { FiChevronRight } from 'react-icons/fi'
 import api from '../../services/api'
 
@@ -18,7 +18,17 @@ interface IRepository {
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState('')
   const [inputError, setInputError] = useState('')
-  const [repositories, setRepositories] = useState<IRepository[]>([])
+  const [repositories, setRepositories] = useState<IRepository[]>(() => {
+    const storagedRepositories = localStorage.getItem(
+      '@GithubExplorer:repositories'
+    )
+
+    if (storagedRepositories) {
+      return JSON.parse(storagedRepositories)
+    } else {
+      return []
+    }
+  })
 
   const handleAddRepository = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
@@ -43,6 +53,13 @@ const Dashboard: React.FC = () => {
     },
     [newRepo, repositories]
   )
+
+  useEffect(() => {
+    localStorage.setItem(
+      '@GithubExplorer:repositories',
+      JSON.stringify(repositories)
+    )
+  }, [repositories])
 
   return (
     <>
