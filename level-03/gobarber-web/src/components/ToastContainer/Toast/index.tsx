@@ -7,6 +7,7 @@ import { IToastMessage, useToast } from '../../../hooks/toast'
 
 interface IToastProps {
   message: IToastMessage
+  style: object
 }
 
 const icons = {
@@ -15,7 +16,7 @@ const icons = {
   success: <FiCheckCircle size={24} />
 }
 
-const Toast: React.FC<IToastProps> = ({ message }) => {
+const Toast: React.FC<IToastProps> = ({ message, style }) => {
   const { removeToast } = useToast()
 
   useEffect(() => {
@@ -29,7 +30,12 @@ const Toast: React.FC<IToastProps> = ({ message }) => {
   }, [message.id, removeToast])
 
   return (
-    <Container key={message.id} type={message.type} hasDescription>
+    <Container
+      key={message.id}
+      type={message.type}
+      hasDescription
+      style={style}
+    >
       {icons[message.type || 'info']}
 
       <div>

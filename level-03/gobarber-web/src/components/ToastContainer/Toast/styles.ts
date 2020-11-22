@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { animated } from 'react-spring'
 
 const toastTypeVariations = {
   info: css`
@@ -20,7 +21,8 @@ interface IContainerProps {
   hasDescription: boolean
 }
 
-export const Container = styled.div<IContainerProps>`
+// eslint-disable-next-line
+export const Container = styled(animated.div) <IContainerProps>`
   width: 360px;
 
   position: relative;
