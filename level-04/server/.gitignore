@@ -1,5 +1,5 @@
 node_modules
-ultima_aula.md
 src/config/auth.ts
 tmp/*
 !tmp/.gitkeep
+coverage
