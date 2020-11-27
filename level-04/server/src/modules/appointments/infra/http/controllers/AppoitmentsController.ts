@@ -1,25 +1,26 @@
 import { Request, Response } from 'express'
 import { parseISO } from 'date-fns'
-import { getCustomRepository } from 'typeorm'
 
-import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepository'
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService'
+import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository'
+
+const appointmentsRepository = new AppointmentsRepository()
 
 export default class AppointmentsController {
-  public async index(request: Request, response: Response): Promise<Response> {
-    const appointmentsRepository = getCustomRepository(AppointmentsRepository)
+  // public async index(request: Request, response: Response): Promise<Response> {
+  //   const appointments = await appointmentsRepository.find()
 
-    const appointments = await appointmentsRepository.find()
-
-    return response.json(appointments)
-  }
+  //   return response.json(appointments)
+  // }
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { provider_id, date } = request.body
 
     const parsedDate = parseISO(date)
 
-    const createAppointment = new CreateAppointmentService()
+    const createAppointment = new CreateAppointmentService(
+      appointmentsRepository
+    )
 
     const appointment = await createAppointment.execute({
       date: parsedDate,
