@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid'
+import { isEqual } from 'date-fns'
 
 import IAppointmentsRepositorty from '../IAppointmentsRepository'
 
@@ -18,7 +19,8 @@ class FakeAppointmentsRepository implements IAppointmentsRepositorty {
     provider_id
   }: IFindByDate): Promise<Appointment | undefined> {
     const findAppointment = this.appointments.find(
-      appointment => appointment.id === provider_id && appointment.date === date
+      appointment =>
+        appointment.id === provider_id || isEqual(appointment.date, date)
     )
 
     return findAppointment
