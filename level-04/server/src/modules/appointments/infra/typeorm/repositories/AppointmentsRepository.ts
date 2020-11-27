@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm'
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment'
+import IAppointmentsRepositorty from '@modules/appointments/repositories/IAppointmentsRepository'
 
 interface IFindByDateData {
   date: Date
@@ -8,7 +9,9 @@ interface IFindByDateData {
 }
 
 @EntityRepository(Appointment)
-class AppointmentsRepository extends Repository<Appointment> {
+class AppointmentsRepository
+  extends Repository<Appointment>
+  implements IAppointmentsRepositorty {
   public async findByDate({
     date,
     provider_id
