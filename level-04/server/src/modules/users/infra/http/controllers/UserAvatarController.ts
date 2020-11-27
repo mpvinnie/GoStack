@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import UpdateUserAvatarService from '../services/UpdateUserAvatarService'
+import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService'
 
 class UserAvatarController {
   public async update(request: Request, response: Response): Promise<Response> {
