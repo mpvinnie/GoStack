@@ -2,6 +2,7 @@ import FakeUsersRepository from '../repositories/fakes/FakeUsersREpository'
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
 import AuthenticateUserService from './AuthenticateUserService'
 import CreateUserService from './CreateUserService'
+import AppError from '@shared/errors/AppError'
 
 let fakeUsersRepository: FakeUsersRepository
 let fakeHashProvider: FakeHashProvider
@@ -35,5 +36,29 @@ describe('AuthenticateUser', () => {
 
     expect(response).toHaveProperty('token')
     expect(response.user).toEqual(user)
+  })
+
+  it('should not to be able to authenticate with non existing user', async () => {
+    await expect(
+      authenticateUser.execute({
+        email: 'johndoe@example.com',
+        password: '123456'
+      })
+    ).rejects.toBeInstanceOf(AppError)
+  })
+
+  it('should not be able to authenticate user with a wrong password', async () => {
+    await createUser.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456'
+    })
+
+    expect(
+      authenticateUser.execute({
+        email: 'johndoe@example.com',
+        password: 'wrong-password'
+      })
+    ).toBeInstanceOf(AppError)
   })
 })
