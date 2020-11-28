@@ -59,6 +59,6 @@ describe('AuthenticateUser', () => {
         email: 'johndoe@example.com',
         password: 'wrong-password'
       })
-    ).toBeInstanceOf(AppError)
+    ).rejects.toBeInstanceOf(AppError)
   })
 })
