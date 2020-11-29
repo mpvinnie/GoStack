@@ -1,4 +1,4 @@
-import FakeUsersRepository from '../repositories/fakes/FakeUsersREpository'
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository'
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
 import AuthenticateUserService from './AuthenticateUserService'
 import CreateUserService from './CreateUserService'
