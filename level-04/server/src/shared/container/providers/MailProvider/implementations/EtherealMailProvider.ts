@@ -6,7 +6,7 @@ import IMailProvider from '../models/IMailProvider'
 import IMailTemplateProvider from '../../MailTemplateProvider/models/IMailTemplateProvider'
 
 @injectable()
-class FakeMailProvider implements IMailProvider {
+class EtherealMailProvider implements IMailProvider {
   private client: Transporter
 
   constructor(
@@ -52,4 +52,4 @@ class FakeMailProvider implements IMailProvider {
   }
 }
 
-export default FakeMailProvider
+export default EtherealMailProvider
